@@ -1,0 +1,63 @@
+plugins {
+    id "java"
+    id "checkstyle"
+    id "com.diffplug.spotless" version "${spotlessVersion}"
+    id "net.ltgt.errorprone" version "${errorPronePluginVersion}"
+    id "org.springframework.boot" version "${springBootVersion}"
+    id "io.spring.dependency-management" version "${springDependenciesVersion}"
+    id "com.adarshr.test-logger" version "${testLoggerVersion}"
+}
+
+group = "dev.gokhun"
+sourceCompatibility = "17"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "com.google.guava:guava:${guavaVersion}"
+
+    implementation "org.springframework.boot:spring-boot-starter"
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "org.assertj:assertj-core:${assertjVersion}"
+
+    errorprone "com.google.errorprone:error_prone_core:${errorProneVersion}"
+    errorprone "tech.picnic.error-prone-support:error-prone-contrib:${errorProneSupportVersion}"
+    errorprone "tech.picnic.error-prone-support:refaster-runner:${errorProneSupportVersion}"
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs += ["-Werror"]
+    options.errorprone.disableWarningsInGeneratedCode = true
+}
+
+test {
+    useJUnitPlatform()
+}
+
+checkstyle {
+    configFile file("${project.rootDir}/checkstyle.xml")
+    checkstyleMain.source = "src/main/java"
+    checkstyleTest.source = "src/test/java"
+}
+
+spotless {
+    java {
+        googleJavaFormat().aosp().reflowLongStrings()
+        target "src/*/java/**/*.java"
+    }
+    groovyGradle {
+        target "*.gradle"
+        greclipse()
+        trimTrailingWhitespace()
+        indentWithSpaces()
+        endWithNewline()
+    }
+    format "misc", {
+        target "*.md", ".gitignore", ".gitattributes"
+        trimTrailingWhitespace()
+        indentWithSpaces()
+        endWithNewline()
+    }
+}
