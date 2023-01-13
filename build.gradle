@@ -1,5 +1,5 @@
 plugins {
-    id "java"
+    id "java-library"
     id "checkstyle"
     id "com.diffplug.spotless" version "${spotlessVersion}"
     id "net.ltgt.errorprone" version "${errorPronePluginVersion}"
@@ -32,7 +32,7 @@ tasks.withType(JavaCompile).configureEach {
     options.errorprone.disableWarningsInGeneratedCode = true
 }
 
-test {
+tasks.withType(Test).configureEach {
     useJUnitPlatform()
 }
 
