@@ -28,7 +28,7 @@ public final class ImmutableCollectionAdvisor implements ConfigurationProperties
         return new ImmutableCollectionBinderHandler(bindHandler);
     }
 
-    private static class ImmutableCollectionBinderHandler extends AbstractBindHandler {
+    private static final class ImmutableCollectionBinderHandler extends AbstractBindHandler {
 
         @Retention(RetentionPolicy.RUNTIME)
         private @interface GuavaCollection {

@@ -1,0 +1,28 @@
+happy:
+  mutable-list:
+    - item 1
+    - item 2
+  mutable-set:
+    - item 1
+    - item 2
+    - item 2
+  mutable-map:
+    key1: value1
+    key2: value2
+  immutable-list:
+    - item 1
+    - item 2
+  immutable-set:
+    - item 1
+    - item 2
+    - item 2
+  immutable-map:
+    key1: value1
+    key2: value2
+  immutable-map-of-list:
+    key1:
+      - item 1
+      - item 2
+    key2:
+      - item 1
+      - item 2
